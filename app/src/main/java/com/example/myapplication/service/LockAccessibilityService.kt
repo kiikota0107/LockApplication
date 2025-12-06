@@ -15,6 +15,8 @@ class LockAccessibilityService : AccessibilityService() {
 
         val packageName = event.packageName?.toString() ?: return
 
+        if (packageName == this.packageName) return
+
         Log.d("LockService", "Opened app: $packageName")
 
         val locked = runBlocking { LockedAppsStore.getLockedApps(this@LockAccessibilityService) }

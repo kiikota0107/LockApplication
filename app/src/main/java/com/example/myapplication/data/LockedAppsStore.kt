@@ -13,9 +13,9 @@ object LockedAppsStore {
     private val LOCKED_PACKAGES = stringSetPreferencesKey("locked_packages")
 
     suspend fun getLockedApps(context: Context): Set<String> {
-        return context.dataStore.data
-            .map { it[LOCKED_PACKAGES] ?: emptySet() }
-            .first()
+        val prefs = context.dataStore.data.first()
+        val locked = prefs[LOCKED_PACKAGES] ?: emptySet()
+        return locked.filterNot { it == context.packageName }.toSet()
     }
 
     suspend fun toggle(context: Context, packageName: String) {
