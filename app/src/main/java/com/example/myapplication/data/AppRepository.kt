@@ -15,6 +15,7 @@ class AppRepository(private val context: Context) {
         return apps
             .filter { app ->
                 pm.getLaunchIntentForPackage(app.packageName) != null
+                        && app.packageName != context.packageName
             }
             .map { app ->
             val name = pm.getApplicationLabel(app).toString()
