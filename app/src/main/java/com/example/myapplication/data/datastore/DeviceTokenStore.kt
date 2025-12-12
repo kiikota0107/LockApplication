@@ -1,17 +1,22 @@
 package com.example.myapplication.data.datastore
 
+import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+
+private val Context.deviceTokenDataStore by preferencesDataStore("device_token_store")
 
 class DeviceTokenStore(
     private val dataStore: DataStore<Preferences>
 ) {
 
     companion object {
+        fun from(context: Context): DeviceTokenStore {
+            return DeviceTokenStore(context.deviceTokenDataStore)
+        }
         private val KEY_DEVICE_TOKEN = stringPreferencesKey("device_token")
     }
 
