@@ -8,11 +8,18 @@ object RetrofitClient {
 
     private const val BASE_URL = BuildConfig.BASE_URL
 
-    val deviceApi: DeviceApi by lazy {
+    private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(DeviceApi::class.java)
+    }
+
+    val deviceApi: DeviceApi by lazy {
+        retrofit.create(DeviceApi::class.java)
+    }
+
+    val taskApi: TaskApi by lazy {
+        retrofit.create(TaskApi::class.java)
     }
 }
